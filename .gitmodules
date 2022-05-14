@@ -1,0 +1,3 @@
+[submodule "flutter_engine"]
+	path = flutter_engine
+	url = git@github.com:flutter/engine.git
