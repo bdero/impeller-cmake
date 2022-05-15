@@ -23,6 +23,14 @@ if(NOT IS_DIRECTORY ${FLUTTER_ENGINE_DIR})
     return()
 endif()
 
+if(WIN32)
+    add_compile_definitions(
+        WIN32_LEAN_AND_MEAN
+        NOMINMAX
+        UNICODE)
+
+endif()
+
 if(APPLE AND NOT XCODE)
     set(CMAKE_CXX_FLAGS "-ObjC++")
 endif()

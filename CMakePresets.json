@@ -2,15 +2,18 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "ninja-debug",
-            "displayName": "Ninja Debug",
-            "description": "Using Ninja",
+            "name": "ninja-debug-clang-vs2022",
+            "displayName": "Ninja Debug VS2022",
+            "description": "Use with the \"x64 Native Tools Command Prompt for VS 2022\"",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "1"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
+                "CMAKE_C_COMPILER": "$env{VSINSTALLDIR}VC/Tools/Llvm/x64/bin/clang-cl.exe",
+                "CMAKE_CXX_COMPILER": "$env{VSINSTALLDIR}VC/Tools/Llvm/x64/bin/clang-cl.exe",
+                "CMAKE_CXX_LINKER": "$env{VSINSTALLDIR}VC/Tools/Llvm/x64/bin/lld-link.exe"
             }
         }
     ],

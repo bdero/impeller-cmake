@@ -11,7 +11,6 @@ else()
     add_library(impeller_renderer SHARED ${RENDERER_SOURCES})
 endif()
 
-
 # Setup OpenGLES.
 if(NOT IS_DIRECTORY ${GLES_INCLUDE_DIR})
     message(SEND_ERROR "Unable to configure the Impeller GLES backend because the GLES include directory (GLES_INCLUDE_DIR) couldn't be found: ${GLES_INCLUDE_DIR}")
