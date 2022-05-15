@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "configurePresets": [
+        {
+            "name": "ninja-debug",
+            "displayName": "Ninja Debug",
+            "description": "Using Ninja",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "1"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "Impeller Renderer debug",
+            "description": "",
+            "displayName": "",
+            "configurePreset": "ninja-debug",
+            "targets": [
+                "impeller_renderer"
+            ]
+        }
+    ]
+}

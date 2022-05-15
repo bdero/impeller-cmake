@@ -1,3 +1,9 @@
-[submodule "flutter_engine"]
-	path = flutter_engine
+[submodule "third_party/flutter"]
+	path = third_party/flutter
 	url = git@github.com:flutter/engine.git
+[submodule "third_party/angle"]
+	path = third_party/angle
+	url = git@github.com:google/angle.git
+[submodule "third_party/abseil-cpp"]
+	path = third_party/abseil-cpp
+	url = git@github.com:abseil/abseil-cpp.git
