@@ -45,6 +45,26 @@ endif()
 
 add_subdirectory(third_party/abseil-cpp)
 
+option(SPIRV_CROSS_CLI "" OFF)
+option(SPIRV_CROSS_ENABLE_TESTS "" OFF)
+option(SPIRV_CROSS_ENABLE_GLSL "" ON)
+option(SPIRV_CROSS_ENABLE_HLSL "" OFF)
+option(SPIRV_CROSS_ENABLE_MSL "" ON)
+option(SPIRV_CROSS_ENABLE_CPP "" OFF)
+option(SPIRV_CROSS_ENABLE_REFLECT "" ON)
+option(SPIRV_CROSS_SKIP_INSTALL "" ON)
+add_subdirectory(third_party/spirv_cross)
+
+option(SHADERC_SKIP_INSTALL "" ON)
+option(SHADERC_SKIP_TESTS "" ON)
+option(SHADERC_SKIP_EXAMPLES "" ON)
+option(SHADERC_SKIP_COPYRIGHT_CHECK "" ON)
+option(SHADERC_ENABLE_WERROR_COMPILE "" OFF)
+add_subdirectory(third_party/shaderc)
+
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_base.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_geometry.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_renderer.cmake)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/impellerc.cmake)

@@ -7,3 +7,15 @@
 [submodule "third_party/abseil-cpp"]
 	path = third_party/abseil-cpp
 	url = git@github.com:abseil/abseil-cpp.git
+[submodule "third_party/spirv_cross"]
+	path = third_party/spirv_cross
+	url = git@github.com:KhronosGroup/SPIRV-Cross.git
+[submodule "third_party/inja"]
+	path = third_party/inja
+	url = git@github.com:pantor/inja.git
+[submodule "third_party/json"]
+	path = third_party/json
+	url = git@github.com:nlohmann/json.git
+[submodule "third_party/shaderc"]
+	path = third_party/shaderc
+	url = git@github.com:google/shaderc.git

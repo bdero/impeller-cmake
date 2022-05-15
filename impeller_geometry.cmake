@@ -1,7 +1,6 @@
 set(GEOMETRY_DIR ${FLUTTER_ENGINE_DIR}/impeller/geometry)
 
-file(GLOB GEOMETRY_SOURCES
-    ${GEOMETRY_DIR}/*.cc)
+file(GLOB GEOMETRY_SOURCES ${GEOMETRY_DIR}/*.cc)
 list(FILTER GEOMETRY_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 
 add_library(impeller_geometry STATIC ${GEOMETRY_SOURCES})

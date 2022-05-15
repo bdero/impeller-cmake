@@ -10,6 +10,9 @@ if(WIN32)
         ${FML_DIR}/platform/win/*.cc)
     list(REMOVE_ITEM FML_SOURCES "${FML_DIR}/backtrace.cc")
     list(APPEND FML_SOURCES "${FML_DIR}/backtrace_stub.cc")
+
+    # https://github.com/flutter/flutter/issues/50053
+    add_compile_definitions(_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING)
 elseif(APPLE)
     file(GLOB FML_PLATFORM_SOURCES
         ${FML_DIR}/platform/darwin/*.mm ${FML_DIR}/platform/win/*.cc)
