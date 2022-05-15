@@ -46,4 +46,5 @@ endif()
 add_subdirectory(third_party/abseil-cpp)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/renderer.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_geometry.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_renderer.cmake)

@@ -23,7 +23,7 @@ target_include_directories(impeller_renderer
     PUBLIC
         $<BUILD_INTERFACE:${GLES_INCLUDE_DIR}>) # For includes starting with "GLES/"
 
-target_link_libraries(impeller_renderer PUBLIC fml)
+target_link_libraries(impeller_renderer PUBLIC fml impeller_geometry)
 target_include_directories(impeller_renderer
     PUBLIC
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
