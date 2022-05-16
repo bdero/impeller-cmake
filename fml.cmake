@@ -27,9 +27,6 @@ add_library(fml STATIC ${FML_SOURCES} ${FML_PLATFORM_SOURCES})
 
 if (WIN32)
     target_link_libraries(fml PRIVATE shlwapi rpcrt4)
-
-    set_property(TARGET fml PROPERTY
-         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
 target_include_directories(fml

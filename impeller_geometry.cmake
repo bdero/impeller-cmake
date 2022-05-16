@@ -5,11 +5,6 @@ list(FILTER GEOMETRY_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 
 add_library(impeller_geometry STATIC ${GEOMETRY_SOURCES})
 
-if (WIN32)
-    set_property(TARGET impeller_geometry PROPERTY
-         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-endif()
-
 target_include_directories(impeller_geometry
     PUBLIC
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"

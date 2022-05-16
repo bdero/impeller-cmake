@@ -42,6 +42,9 @@ if(WIN32)
     # Use the static MSVC runtime library everywhere because:
     #   1. the dynamic runtime doesn't work with FML, and
     #   2. the same runtime needs to be used everywhere.
+    # Set compile options directly instead of using the `MSVC_RUNTIME_LIBRARY`
+    # CMake property because setting said property in the GLOBAL scope doesn't
+    # work for some reason.
     add_compile_options(
         $<$<CONFIG:>:/MT>
         $<$<CONFIG:Debug>:/MTd>
