@@ -18,8 +18,19 @@ elseif(NOT IS_ABSOLUTE "${GLES_INCLUDE_DIR}")
     get_filename_component(GLES_INCLUDE_DIR "${GLES_INCLUDE_DIR}" REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
+if(NOT SHADERC_INSTALL_DIR)
+    set(SHADERC_INSTALL_DIR "${THIRD_PARTY_DIR}/shaderc/install" CACHE STRING "Location of the shaderc lib and include directories.")
+elseif(NOT IS_ABSOLUTE "${SHADERC_INSTALL_DIR}")
+    get_filename_component(SHADERC_INSTALL_DIR "${SHADERC_INSTALL_DIR}" REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+endif()
+
 if(NOT IS_DIRECTORY ${FLUTTER_ENGINE_DIR})
-    message(SEND_ERROR "Unable to configure any targets because the Flutter Engine directory (FLUTTER_ENGINE_DIR) couldn't be found: ${FLUTTER_ENGINE_DIR}")
+    message(SEND_ERROR
+        "Unable to configure any targets because the Flutter Engine directory "
+        "(FLUTTER_ENGINE_DIR) couldn't be found: "
+        "    ${FLUTTER_ENGINE_DIR}\n"
+        "Have the git submodules been initialized?:"
+        "    git submodule update --init --recursive")
     return()
 endif()
 
@@ -28,7 +39,6 @@ if(WIN32)
         WIN32_LEAN_AND_MEAN
         NOMINMAX
         UNICODE)
-
 endif()
 
 if(APPLE AND NOT XCODE)
@@ -54,13 +64,6 @@ option(SPIRV_CROSS_ENABLE_CPP "" OFF)
 option(SPIRV_CROSS_ENABLE_REFLECT "" ON)
 option(SPIRV_CROSS_SKIP_INSTALL "" ON)
 add_subdirectory(third_party/spirv_cross)
-
-option(SHADERC_SKIP_INSTALL "" ON)
-option(SHADERC_SKIP_TESTS "" ON)
-option(SHADERC_SKIP_EXAMPLES "" ON)
-option(SHADERC_SKIP_COPYRIGHT_CHECK "" ON)
-option(SHADERC_ENABLE_WERROR_COMPILE "" OFF)
-add_subdirectory(third_party/shaderc)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_base.cmake)

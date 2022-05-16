@@ -13,7 +13,12 @@ endif()
 
 # Setup OpenGLES.
 if(NOT IS_DIRECTORY ${GLES_INCLUDE_DIR})
-    message(SEND_ERROR "Unable to configure the Impeller GLES backend because the GLES include directory (GLES_INCLUDE_DIR) couldn't be found: ${GLES_INCLUDE_DIR}")
+message(SEND_ERROR
+    "Unable to configure the Impeller GLES backend because the GLES include"
+    "directory (GLES_INCLUDE_DIR) couldn't be found: "
+    "    ${GLES_INCLUDE_DIR}\n"
+    "Have the git submodules been initialized?: "
+    "    git submodule update --init --recursive")
     return()
 endif()
 
