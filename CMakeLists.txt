@@ -18,10 +18,10 @@ elseif(NOT IS_ABSOLUTE "${GLES_INCLUDE_DIR}")
     get_filename_component(GLES_INCLUDE_DIR "${GLES_INCLUDE_DIR}" REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
-if(NOT SHADERC_INSTALL_DIR)
-    set(SHADERC_INSTALL_DIR "${THIRD_PARTY_DIR}/shaderc/install" CACHE STRING "Location of the shaderc lib and include directories.")
-elseif(NOT IS_ABSOLUTE "${SHADERC_INSTALL_DIR}")
-    get_filename_component(SHADERC_INSTALL_DIR "${SHADERC_INSTALL_DIR}" REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+if(NOT SHADERC_DIR)
+    set(SHADERC_DIR "${THIRD_PARTY_DIR}/shaderc" CACHE STRING "Location of the shaderc repository.")
+elseif(NOT IS_ABSOLUTE "${SHADERC_DIR}")
+    get_filename_component(SHADERC_DIR "${SHADERC_DIR}" REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
 if(NOT IS_DIRECTORY ${FLUTTER_ENGINE_DIR})
@@ -39,6 +39,13 @@ if(WIN32)
         WIN32_LEAN_AND_MEAN
         NOMINMAX
         UNICODE)
+    # Use the static MSVC runtime library everywhere because:
+    #   1. the dynamic runtime doesn't work with FML, and
+    #   2. the same runtime needs to be used everywhere.
+    add_compile_options(
+        $<$<CONFIG:>:/MT>
+        $<$<CONFIG:Debug>:/MTd>
+        $<$<CONFIG:Release>:/MT>)
 endif()
 
 if(APPLE AND NOT XCODE)
@@ -64,6 +71,13 @@ option(SPIRV_CROSS_ENABLE_CPP "" OFF)
 option(SPIRV_CROSS_ENABLE_REFLECT "" ON)
 option(SPIRV_CROSS_SKIP_INSTALL "" ON)
 add_subdirectory(third_party/spirv_cross)
+
+option(SHADERC_SKIP_INSTALL "" ON)
+option(SHADERC_SKIP_TESTS "" ON)
+option(SHADERC_SKIP_EXAMPLES "" ON)
+option(SHADERC_SKIP_COPYRIGHT_CHECK "" ON)
+option(SHADERC_ENABLE_WERROR_COMPILE "" OFF)
+add_subdirectory(third_party/shaderc)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_base.cmake)
