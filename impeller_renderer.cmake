@@ -17,8 +17,7 @@ message(SEND_ERROR
     "Unable to configure the Impeller GLES backend because the GLES include"
     "directory (GLES_INCLUDE_DIR) couldn't be found: "
     "    ${GLES_INCLUDE_DIR}\n"
-    "Have the git submodules been initialized?: "
-    "    git submodule update --init --recursive")
+    "Run `deps.sh` to fetch dependencies.")
     return()
 endif()
 
@@ -30,7 +29,7 @@ target_include_directories(impeller_renderer
 
 target_link_libraries(impeller_renderer
     PUBLIC
-        fml impeller_base impeller_geometry)
+        fml impeller_base impeller_blobcat impeller_geometry)
 target_include_directories(impeller_renderer
     PUBLIC
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"

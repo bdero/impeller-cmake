@@ -29,8 +29,7 @@ if(NOT IS_DIRECTORY ${FLUTTER_ENGINE_DIR})
         "Unable to configure any targets because the Flutter Engine directory "
         "(FLUTTER_ENGINE_DIR) couldn't be found: "
         "    ${FLUTTER_ENGINE_DIR}\n"
-        "Have the git submodules been initialized?:"
-        "    git submodule update --init --recursive")
+        "Run `deps.sh` to fetch dependencies.")
     return()
 endif()
 
@@ -84,6 +83,7 @@ add_subdirectory(third_party/shaderc)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_base.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_blobcat.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_geometry.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_renderer.cmake)
 
