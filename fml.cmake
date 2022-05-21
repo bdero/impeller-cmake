@@ -1,6 +1,13 @@
 set(FML_DIR ${FLUTTER_ENGINE_DIR}/fml)
 
 file(GLOB FML_SOURCES ${FML_DIR}/*.cc)
+file(GLOB FML_SOURCES_MEMORY ${FML_DIR}/memory/*.cc)
+file(GLOB FML_SOURCES_SYNCHRONIZATION ${FML_DIR}/synchronization/*.cc)
+file(GLOB FML_SOURCES_TIME ${FML_DIR}/time/*.cc)
+
+list(APPEND FML_SOURCES
+    ${FML_SOURCES_MEMORY} ${FML_SOURCES_SYNCHRONIZATION} ${FML_SOURCES_TIME})
+
 list(FILTER FML_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 list(REMOVE_ITEM FML_SOURCES "${FML_DIR}/message_loop_task_queues_benchmark.cc")
 list(REMOVE_ITEM FML_SOURCES "${FML_DIR}/icu_util.cc")
