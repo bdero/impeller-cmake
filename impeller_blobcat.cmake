@@ -29,6 +29,7 @@ function(blobcat)
         COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTDIR}"
         COMMAND "$<TARGET_FILE:blobcat>" ${CLI}
         DEPENDS ${ARG_INPUTS}
+        BYPRODUCTS ${ARG_OUTPUT}
         COMMENT "Building blob ${ARG_OUTPUT}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endfunction()

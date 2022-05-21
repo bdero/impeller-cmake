@@ -28,10 +28,19 @@ target_include_directories(impellerc
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/json/include> # For "nlohmann/json.hpp"
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/shaderc/libshaderc/include>) # For "shaderc/shaderc.hpp"
 
-# impellerc(INPUT glsl_filename SL sl_output_filename ...)
+# impellerc(
+#    INPUT glsl_filename
+#    SL sl_output_filename
+#    [REFLECTION_JSON reflection_json_file]
+#    [REFLECTION_HEADER reflection_header_file]
+#    [REFLECTION_CC reflection_cc_file]
+#    ...
+# )
 # See `impellerc_parse` below for the full set of inputs.
 function(impellerc)
-    cmake_parse_arguments(ARG "" "INPUT;SL" "" ${ARGN})
+    cmake_parse_arguments(ARG
+        "" "INPUT;SL;REFLECTION_JSON;REFLECTION_HEADER;REFLECTION_CC" ""
+        ${ARGN})
     shaderc_parse(CLI INPUT ${ARG_INPUT} SL ${ARG_SL} ${ARG_UNPARSED_ARGUMENTS})
     get_filename_component(OUTDIR "${ARG_SL}" ABSOLUTE)
     get_filename_component(OUTDIR "${OUTDIR}" DIRECTORY)
@@ -39,6 +48,8 @@ function(impellerc)
         COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTDIR}"
         COMMAND "$<TARGET_FILE:impellerc>" ${CLI}
         MAIN_DEPENDENCY ${ARG_INPUT}
+        BYPRODUCTS ${ARG_SL}
+            ${ARG_REFLECTION_JSON} ${ARG_REFLECTION_HEADER} ${ARG_REFLECTION_CC}
         COMMENT "Compiling shader ${ARG_INPUT}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endfunction()
