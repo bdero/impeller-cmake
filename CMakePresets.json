@@ -2,7 +2,7 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "ninja-debug-clang-vs2022",
+            "name": "ninja-debug",
             "displayName": "Ninja Debug VS2022",
             "description": "Use with the \"x64 Native Tools Command Prompt for VS 2022\"",
             "generator": "Ninja",
