@@ -1,4 +1,5 @@
-set(FML_DIR ${FLUTTER_ENGINE_DIR}/fml)
+set(FML_DIR ${FLUTTER_ENGINE_DIR}/fml
+    CACHE STRING "Location of the FML sources.")
 
 file(GLOB FML_SOURCES ${FML_DIR}/*.cc)
 file(GLOB FML_SOURCES_MEMORY ${FML_DIR}/memory/*.cc)

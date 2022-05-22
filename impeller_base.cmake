@@ -1,6 +1,7 @@
-set(BASE_DIR ${FLUTTER_ENGINE_DIR}/impeller/base)
+set(IMPELLER_BASE_DIR ${FLUTTER_ENGINE_DIR}/impeller/base
+    CACHE STRING "Location of the Impeller base sources.")
 
-file(GLOB BASE_SOURCES ${BASE_DIR}/*.cc)
+file(GLOB BASE_SOURCES ${IMPELLER_BASE_DIR}/*.cc)
 list(FILTER BASE_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 
 add_library(impeller_base STATIC ${BASE_SOURCES})

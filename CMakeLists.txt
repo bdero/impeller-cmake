@@ -82,6 +82,7 @@ option(SHADERC_ENABLE_WERROR_COMPILE "" OFF)
 add_subdirectory(third_party/shaderc)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tools.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_base.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_blobcat.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_geometry.cmake)

@@ -1,32 +1,40 @@
-set(TOOLS_DIR ${FLUTTER_ENGINE_DIR}/impeller/tools)
+set(IMPELLER_TOOLS_DIR ${FLUTTER_ENGINE_DIR}/impeller/tools
+    CACHE STRING "Location of the Impeller tools.")
+
+find_package(PythonInterp REQUIRED)
 
 # xxd(
+#    SYMBOL_NAME name
 #    OUTPUT_HEADER filename
 #    OUTPUT_SOURCE filename
 #    SOURCE filename
-#    ...
 # )
-# See `impellerc_parse` below for the full set of inputs.
 function(xxd)
     cmake_parse_arguments(ARG
         "" "OUTPUT_HEADER;OUTPUT_SOURCE;SOURCE" "" ${ARGN})
-    blobcat_parse(CLI
-        SYMBOL_NAME ${ARG_SYMBOL_NAME}
+    xxd_parse(CLI
         OUTPUT_HEADER ${ARG_OUTPUT_HEADER}
         OUTPUT_SOURCE ${ARG_OUTPUT_SOURCE}
+        SOURCE ${ARG_SOURCE}
         ${ARG_UNPARSED_ARGUMENTS})
-    get_filename_component(OUTDIR "${ARG_OUTPUT_SOURCE}" ABSOLUTE)
-    get_filename_component(OUTDIR "${OUTDIR}" DIRECTORY)
-    add_custom_command(OUTPUT ${ARG_OUTPUT}
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTDIR}"
-        COMMAND "python ${TOOLS_DIR}/xxd.py" ${CLI}
+
+    get_filename_component(OUTPUT_HEADER_DIR "${ARG_OUTPUT_HEADER}" ABSOLUTE)
+    get_filename_component(OUTPUT_HEADER_DIR "${OUTPUT_HEADER_DIR}" DIRECTORY)
+    get_filename_component(OUTPUT_SOURCE_DIR "${ARG_OUTPUT_SOURCE}" ABSOLUTE)
+    get_filename_component(OUTPUT_SOURCE_DIR "${OUTPUT_SOURCE_DIR}" DIRECTORY)
+
+    add_custom_command(
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTPUT_HEADER_DIR}"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTPUT_SOURCE_DIR}"
+        COMMAND ${PYTHON_EXECUTABLE} ${IMPELLER_TOOLS_DIR}/xxd.py ${CLI}
         MAIN_DEPENDENCY ${ARG_SOURCE}
-        BYPRODUCTS ${OUTPUT_HEADER} ${OUTPUT_SOURCE}
+        OUTPUT ${ARG_OUTPUT_HEADER} ${ARG_OUTPUT_SOURCE}
         COMMENT "Dumping translation unit ${ARG_OUTPUT_SOURCE}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endfunction()
 
 # xxd_parse(
+#    cli_out
 #    SYMBOL_NAME name
 #    OUTPUT_HEADER filename
 #    OUTPUT_SOURCE filename

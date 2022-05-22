@@ -1,8 +1,9 @@
-set(RENDERER_DIR ${FLUTTER_ENGINE_DIR}/impeller/renderer)
+set(IMPELLER_RENDERER_DIR ${FLUTTER_ENGINE_DIR}/impeller/renderer
+    CACHE STRING "Location of the Impeller renderer sources.")
 
 file(GLOB RENDERER_SOURCES
-    ${RENDERER_DIR}/*.cc
-    ${RENDERER_DIR}/backend/gles/*.cc)
+    ${IMPELLER_RENDERER_DIR}/*.cc
+    ${IMPELLER_RENDERER_DIR}/backend/gles/*.cc)
 list(FILTER RENDERER_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 
 if(IMPELLER_LIBRARY_TYPE STREQUAL STATIC)
