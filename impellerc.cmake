@@ -31,6 +31,7 @@ target_include_directories(impellerc
 # impellerc(
 #    INPUT glsl_filename
 #    SL sl_output_filename
+#    SPIRV spirv_output_file
 #    [REFLECTION_JSON reflection_json_file]
 #    [REFLECTION_HEADER reflection_header_file]
 #    [REFLECTION_CC reflection_cc_file]
@@ -39,16 +40,23 @@ target_include_directories(impellerc
 # See `impellerc_parse` below for the full set of inputs.
 function(impellerc)
     cmake_parse_arguments(ARG
-        "" "INPUT;SL;REFLECTION_JSON;REFLECTION_HEADER;REFLECTION_CC" ""
+        "" "INPUT;SL;SPIRV;REFLECTION_JSON;REFLECTION_HEADER;REFLECTION_CC" ""
         ${ARGN})
-    shaderc_parse(CLI INPUT ${ARG_INPUT} SL ${ARG_SL} ${ARG_UNPARSED_ARGUMENTS})
+    impellerc_parse(CLI
+        INPUT ${ARG_INPUT}
+        SL ${ARG_SL}
+        SPIRV ${ARG_SPIRV}
+        REFLECTION_JSON ${ARG_REFLECTION_JSON}
+        REFLECTION_HEADER ${ARG_REFLECTION_HEADER}
+        REFLECTION_CC ${ARG_REFLECTION_CC}
+        ${ARG_UNPARSED_ARGUMENTS})
     get_filename_component(OUTDIR "${ARG_SL}" ABSOLUTE)
     get_filename_component(OUTDIR "${OUTDIR}" DIRECTORY)
     add_custom_command(OUTPUT ${ARG_SL}
         COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTDIR}"
         COMMAND "$<TARGET_FILE:impellerc>" ${CLI}
         MAIN_DEPENDENCY ${ARG_INPUT}
-        BYPRODUCTS ${ARG_SL}
+        OUTPUT ${ARG_SL} ${ARG_SPIRV}
             ${ARG_REFLECTION_JSON} ${ARG_REFLECTION_HEADER} ${ARG_REFLECTION_CC}
         COMMENT "Compiling shader ${ARG_INPUT}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
@@ -75,17 +83,17 @@ function(impellerc_parse CLI_OUT)
 
     # --input
     if(ARG_INPUT)
-        list(APPEND CLI "--input" "${ARG_INPUT}")
+        list(APPEND CLI "--input=${ARG_INPUT}")
     endif()
 
     # --sl
     if(ARG_SL)
-        list(APPEND CLI "--sl" "${ARG_SL}")
+        list(APPEND CLI "--sl=${ARG_SL}")
     endif()
 
     # --spirv
     if(ARG_SPIRV)
-        list(APPEND CLI "--spirv" "${ARG_SPIRV}")
+        list(APPEND CLI "--spirv=${ARG_SPIRV}")
     endif()
 
     # --[flutter-spirv|metal-desktop|metal-ios|opengl-desktop|opengl-es]
@@ -119,36 +127,36 @@ function(impellerc_parse CLI_OUT)
 
     # --reflection-json
     if(ARG_REFLECTION_JSON)
-        list(APPEND CLI "--reflection-json" "${ARG_REFLECTION_JSON}")
+        list(APPEND CLI "--reflection-json=${ARG_REFLECTION_JSON}")
     endif()
 
     # --reflection-header
     if(ARG_REFLECTION_HEADER)
-        list(APPEND CLI "--reflection-header" "${ARG_REFLECTION_HEADER}")
+        list(APPEND CLI "--reflection-header=${ARG_REFLECTION_HEADER}")
     endif()
 
     # --reflection-cc
     if(ARG_REFLECTION_CC)
-        list(APPEND CLI "--reflection-cc" "${ARG_REFLECTION_CC}")
+        list(APPEND CLI "--reflection-cc=${ARG_REFLECTION_CC}")
     endif()
 
     # --include
     if(ARG_INCLUDES)
         foreach(INCLUDE ${ARG_INCLUDES})
-            list(APPEND CLI "--include" "${INCLUDE}")
+            list(APPEND CLI "--include=${INCLUDE}")
         endforeach()
     endif()
 
     # --define
     if(ARG_DEFINES)
         foreach(DEFINE ${ARG_DEFINES})
-            list(APPEND CLI "--define" "${DEFINE}")
+            list(APPEND CLI "--define=${DEFINE}")
         endforeach()
     endif()
 
     # --depfile
     if(ARG_DEPFILE)
-        list(APPEND CLI "--depfile" "${ARG_DEPFILE}")
+        list(APPEND CLI "--depfile=${ARG_DEPFILE}")
     endif()
 
     set(${CLI_OUT} ${CLI} PARENT_SCOPE)

@@ -29,7 +29,7 @@ function(blobcat)
         COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTDIR}"
         COMMAND "$<TARGET_FILE:blobcat>" ${CLI}
         DEPENDS ${ARG_INPUTS}
-        BYPRODUCTS ${ARG_OUTPUT}
+        OUTPUT ${ARG_OUTPUT}
         COMMENT "Building blob ${ARG_OUTPUT}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endfunction()
@@ -44,13 +44,13 @@ function(blobcat_parse CLI_OUT)
 
     # --output
     if(ARG_OUTPUT)
-        list(APPEND CLI "--output" "${ARG_OUTPUT}")
+        list(APPEND CLI "--output=${ARG_OUTPUT}")
     endif()
 
     # --input
     if(ARG_INPUTS)
         foreach(INPUT ${ARG_INPUTS})
-            list(APPEND CLI "--input" "${INPUT}")
+            list(APPEND CLI "--input=${INPUT}")
         endforeach()
     endif()
 
