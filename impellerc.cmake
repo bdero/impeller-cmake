@@ -56,7 +56,7 @@ function(add_gles_shader_library)
     xxd(
         SYMBOL_NAME ${ARG_NAME}_shaders_gles
         OUTPUT_HEADER ${ARG_OUTPUT_DIR}/gles/${ARG_NAME}_shaders_gles.h
-        OUTPUT_SOURCE ${ARG_OUTPUT_DIR}/gles/${ARG_NAME}_shaders_gles.cc
+        OUTPUT_SOURCE ${ARG_OUTPUT_DIR}/gles/${ARG_NAME}_shaders_gles.c
         SOURCE ${ARG_OUTPUT_DIR}/${ARG_NAME}_gles.blob)
 endfunction()
 
