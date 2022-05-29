@@ -24,17 +24,25 @@ if(WIN32)
     add_compile_definitions(_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING)
 elseif(APPLE)
     file(GLOB FML_PLATFORM_SOURCES
-        ${FML_DIR}/platform/darwin/*.mm ${FML_DIR}/platform/darwin/*.cc)
+        ${FML_DIR}/platform/posix/*.cc
+        ${FML_DIR}/platform/darwin/*.mm
+        ${FML_DIR}/platform/darwin/*.cc)
 elseif(UNIX)
     file(GLOB FML_PLATFORM_SOURCES
+        ${FML_DIR}/platform/posix/*.cc
         ${FML_DIR}/platform/linux/*.cc)
 endif()
 list(FILTER FML_PLATFORM_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
+list(FILTER FML_PLATFORM_SOURCES EXCLUDE REGEX ".*_unittests?\\.mm$")
 
 add_library(fml STATIC ${FML_SOURCES} ${FML_PLATFORM_SOURCES})
 
-if (WIN32)
+if(WIN32)
     target_link_libraries(fml PRIVATE shlwapi rpcrt4)
+elseif(APPLE)
+    find_library(COCOA_LIBRARY Cocoa)
+	find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+    target_link_libraries(fml PUBLIC ${COCOA_LIBRARY} ${COREFOUNDATION_LIBRARY})
 endif()
 
 target_include_directories(fml
