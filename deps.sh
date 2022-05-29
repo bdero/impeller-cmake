@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Fetching git submodules..."
+echo "Fetching impeller-cmake git submodules..."
 git submodule update --init --recursive
-echo "Done fetching git submodules."
+echo "Done fetching impeller-cmake git submodules."
 echo
 
 ROOT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}"); pwd -P)
