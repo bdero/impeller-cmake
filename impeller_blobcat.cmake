@@ -29,7 +29,7 @@ function(blobcat)
     get_filename_component(OUTPUT_DIR "${ARG_OUTPUT}" ABSOLUTE)
     get_filename_component(OUTPUT_DIR "${OUTPUT_DIR}" DIRECTORY)
 
-    add_custom_command(OUTPUT ${ARG_OUTPUT}
+    add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTPUT_DIR}"
         COMMAND "$<TARGET_FILE:blobcat>" ${CLI}
         DEPENDS ${ARG_INPUTS}

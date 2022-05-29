@@ -113,7 +113,7 @@ function(impellerc)
     get_filename_component(REFLECTION_CC_DIR "${ARG_REFLECTION_CC}" ABSOLUTE)
     get_filename_component(REFLECTION_CC_DIR "${REFLECTION_CC_DIR}" DIRECTORY)
 
-    add_custom_command(OUTPUT ${ARG_SL}
+    add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E make_directory "${SL_DIR}"
         COMMAND ${CMAKE_COMMAND} -E make_directory "${SPIRV_DIR}"
         COMMAND ${CMAKE_COMMAND} -E make_directory "${REFLECTION_JSON_DIR}"
