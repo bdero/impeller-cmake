@@ -38,9 +38,14 @@ function(add_gles_shader_library)
     cmake_parse_arguments(ARG "" "NAME;OUTPUT_DIR" "SHADERS" ${ARGN})
 
     set(BLOB_FILES "")
+    if(APPLE)
+        set(SHADER_TYPE OPENGL_DESKTOP)
+    else()
+        set(SHADER_TYPE OPENGL_ES)
+    endif()
     foreach(SHADER ${ARG_SHADERS})
         add_shader(
-            OPENGL_ES
+            ${SHADER_TYPE}
             INPUT ${SHADER}
             OUTPUT_DIR ${ARG_OUTPUT_DIR}
             SL_EXTENSION gles)

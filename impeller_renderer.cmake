@@ -12,6 +12,19 @@ else()
     add_library(impeller_renderer SHARED ${RENDERER_SOURCES})
 endif()
 
+if(APPLE)
+    find_library(COREVIDEO_LIBRARY CoreVideo)
+    find_library(IOKIT_LIBRARY IOKit)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(CARBON_LIBRARY Carbon)
+    target_link_libraries(fml
+        PUBLIC
+            ${COREVIDEO_LIBRARY}
+            ${IOKIT_LIBRARY}
+            ${COCOA_LIBRARY}
+            ${CARBON_LIBRARY})
+endif()
+
 # Setup OpenGLES.
 if(NOT IS_DIRECTORY ${GLES_INCLUDE_DIR})
 message(SEND_ERROR
