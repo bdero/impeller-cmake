@@ -37,6 +37,8 @@ if(NOT IS_DIRECTORY ${FLUTTER_ENGINE_DIR})
     return()
 endif()
 
+set(IMPELLER_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated)
+
 if(WIN32)
     add_compile_definitions(
         WIN32_LEAN_AND_MEAN
@@ -52,6 +54,9 @@ if(WIN32)
         $<$<CONFIG:>:/MT>
         $<$<CONFIG:Debug>:/MTd>
         $<$<CONFIG:Release>:/MT>)
+
+    # Ignore MSVC runtime warnings.
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
 set(IMPELLER_LIBRARY_TYPE STATIC CACHE STRING "Linking type for library")
@@ -81,11 +86,13 @@ option(SHADERC_SKIP_COPYRIGHT_CHECK "" ON)
 option(SHADERC_ENABLE_WERROR_COMPILE "" OFF)
 add_subdirectory(third_party/shaderc)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/flatbuffers.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tools.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_base.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_blobcat.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_geometry.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_renderer.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_runtime_stage.cmake)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/impellerc.cmake)

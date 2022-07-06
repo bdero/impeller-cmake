@@ -19,3 +19,6 @@
 [submodule "third_party/shaderc"]
 	path = third_party/shaderc
 	url = git@github.com:google/shaderc.git
+[submodule "third_party/flatbuffers"]
+	path = third_party/flatbuffers
+	url = git@github.com:google/flatbuffers.git
