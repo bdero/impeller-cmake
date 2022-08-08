@@ -1,19 +1,19 @@
 option(FLATBUFFERS_BUILD_TESTS "" OFF)
 add_subdirectory(third_party/flatbuffers)
 
+set(FLATBUFFERS_INCLUDE_DIR ${THIRD_PARTY_DIR}/flatbuffers/include)
+
 # flatbuffers_schema(
+#    TARGET dependent
 #    INPUT filename
 #    OUTPUT_DIR path
 # )
 function(flatbuffers_schema)
-    cmake_parse_arguments(ARG "" "INPUT;OUTPUT_DIR" "" ${ARGN})
+    cmake_parse_arguments(ARG "" "TARGET;INPUT;OUTPUT_DIR" "" ${ARGN})
 
     get_filename_component(INPUT_FILENAME ${ARG_INPUT} NAME_WE)
 
-    message(STATUS "ARG_OUTPUT_DIR ${ARG_OUTPUT_DIR}")
-
     set(OUTPUT_HEADER "${ARG_OUTPUT_DIR}/${INPUT_FILENAME}_flatbuffers.h")
-    message(STATUS "OUTPUT_HEADER ${OUTPUT_HEADER}")
     add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E make_directory "${ARG_OUTPUT_DIR}"
         COMMAND "$<TARGET_FILE:flatc>"
@@ -29,4 +29,6 @@ function(flatbuffers_schema)
         OUTPUT "${OUTPUT_HEADER}"
         COMMENT "Generating flatbuffer schema ${ARG_INPUT}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+
+    target_sources(${ARG_TARGET} PUBLIC "${OUTPUT_HEADER}")
 endfunction()
