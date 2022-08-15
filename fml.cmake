@@ -38,7 +38,7 @@ list(FILTER FML_PLATFORM_SOURCES EXCLUDE REGEX ".*_unittests?\\.mm$")
 add_library(fml STATIC ${FML_SOURCES} ${FML_PLATFORM_SOURCES})
 
 if(WIN32)
-    target_link_libraries(fml PRIVATE shlwapi rpcrt4)
+    target_link_libraries(fml PRIVATE shlwapi rpcrt4 winmm)
 elseif(APPLE)
     find_library(COCOA_LIBRARY Cocoa)
 	find_library(COREFOUNDATION_LIBRARY CoreFoundation)
