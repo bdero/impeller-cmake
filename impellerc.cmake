@@ -76,15 +76,17 @@ endfunction()
 #    OUTPUT_DIR path
 #    SL_EXTENSION extension
 #    [DEFINES define;define]
+#    [INCLUDES include;include]
 #    ...
 # )
 # See `impellerc_parse` below for the full set of inputs.
 function(add_shader)
-    cmake_parse_arguments(ARG "" "INPUT;OUTPUT_DIR;SL_EXTENSION" "DEFINES" ${ARGN})
+    cmake_parse_arguments(ARG "" "INPUT;OUTPUT_DIR;SL_EXTENSION" "DEFINES;INCLUDES" ${ARGN})
     get_filename_component(INPUT_FILENAME ${ARG_INPUT} NAME)
     if(ARG_SL_EXTENSION STREQUAL "gles")
         list(APPEND ARG_DEFINES "IMPELLER_TARGET_OPENGLES")
     endif()
+    list(APPEND ARG_INCLUDES "${IMPELLER_COMPILER_DIR}/shader_lib")
     impellerc(
         INPUT ${ARG_INPUT}
         SL ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.${ARG_SL_EXTENSION}
@@ -93,6 +95,7 @@ function(add_shader)
         REFLECTION_HEADER ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.h
         REFLECTION_CC ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.cc
         DEFINES ${ARG_DEFINES}
+        INCLUDES ${ARG_INCLUDES}
         ${ARG_UNPARSED_ARGUMENTS})
 endfunction()
 
