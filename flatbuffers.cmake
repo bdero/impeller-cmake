@@ -31,4 +31,7 @@ function(flatbuffers_schema)
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
     target_sources(${ARG_TARGET} PUBLIC "${OUTPUT_HEADER}")
+    target_include_directories(${ARG_TARGET}
+        PUBLIC
+            $<BUILD_INTERFACE:${FLATBUFFERS_INCLUDE_DIR}>) # For includes starting with "flatbuffers/"
 endfunction()

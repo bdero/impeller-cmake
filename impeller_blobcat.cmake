@@ -7,10 +7,16 @@ list(REMOVE_ITEM BLOBCAT_SOURCES "${IMPELLER_BLOBCAT_DIR}/blobcat_main.cc")
 
 add_library(impeller_blobcat STATIC ${BLOBCAT_SOURCES})
 
+flatbuffers_schema(
+    TARGET impeller_blobcat
+    INPUT ${IMPELLER_BLOBCAT_DIR}/blob.fbs
+    OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/blobcat)
+
 target_include_directories(impeller_blobcat
     PUBLIC
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
-        $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
+        $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
+        $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
 target_link_libraries(impeller_blobcat PUBLIC fml impeller_base)
 
 add_executable(blobcat "${IMPELLER_BLOBCAT_DIR}/blobcat_main.cc")
