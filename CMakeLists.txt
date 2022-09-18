@@ -67,6 +67,10 @@ if(IMPELLER_LIBRARY_TYPE MATCHES "SHARED")
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
+if(APPLE)
+elseif(UNIX)
+    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+endif()
 add_subdirectory(third_party/abseil-cpp)
 
 option(SPIRV_CROSS_CLI "" OFF)
