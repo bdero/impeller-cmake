@@ -57,6 +57,8 @@ if(WIN32)
 
     # Ignore MSVC runtime warnings.
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+elseif(UNIX)
+    set(CXX_STANDARD_LIBRARY libc++)
 endif()
 
 set(IMPELLER_LIBRARY_TYPE STATIC CACHE STRING "Linking type for library")

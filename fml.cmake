@@ -43,6 +43,8 @@ elseif(APPLE)
     find_library(COCOA_LIBRARY Cocoa)
 	find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     target_link_libraries(fml PUBLIC ${COCOA_LIBRARY} ${COREFOUNDATION_LIBRARY})
+elseif(UNIX)
+    target_link_libraries(fml PUBLIC dl)
 endif()
 
 target_include_directories(fml
