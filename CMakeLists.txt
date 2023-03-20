@@ -96,6 +96,7 @@ option(SHADERC_SKIP_COPYRIGHT_CHECK "" ON)
 option(SHADERC_ENABLE_WERROR_COMPILE "" OFF)
 add_subdirectory(third_party/shaderc)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/libtess2.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/flatbuffers.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/fml.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_base.cmake)
@@ -104,6 +105,16 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_core.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_geometry.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_renderer.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_runtime_stage.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_image.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tessellator.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tools.cmake)
+#include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_typographer.cmake)
+
+# cmake support not complete for scene
+# include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_scene.cmake)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/impellerc.cmake)
+
+# Needs to use the add_gles_shader_library function defined in impellerc.cmake
+#include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_entity.cmake)
+#include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_aiks.cmake)

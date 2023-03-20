@@ -40,7 +40,7 @@ target_include_directories(impellerc
 #    OUTPUT_DIR path
 # )
 function(add_gles_shader_library)
-    cmake_parse_arguments(ARG "" "NAME;OUTPUT_DIR" "SHADERS" ${ARGN})
+    cmake_parse_arguments(ARG "" "NAME;OUTPUT_DIR;GLES_LANGUAGE_VERSION" "SHADERS" ${ARGN})
 
     set(BLOB_FILES "")
     if(APPLE)
@@ -53,6 +53,7 @@ function(add_gles_shader_library)
             ${SHADER_TYPE}
             INPUT ${SHADER}
             OUTPUT_DIR ${ARG_OUTPUT_DIR}
+            GLES_LANGUAGE_VERSION ${ARG_GLES_LANGUAGE_VERSION}
             SL_EXTENSION gles)
 
         get_filename_component(INPUT_FILENAME ${SHADER} NAME)
@@ -83,9 +84,12 @@ endfunction()
 function(add_shader)
     cmake_parse_arguments(ARG "" "INPUT;OUTPUT_DIR;SL_EXTENSION" "DEFINES;INCLUDES" ${ARGN})
     get_filename_component(INPUT_FILENAME ${ARG_INPUT} NAME)
+    get_filename_component(INPUT_DIRECTORY ${ARG_INPUT} DIRECTORY)
     if(ARG_SL_EXTENSION STREQUAL "gles")
         list(APPEND ARG_DEFINES "IMPELLER_TARGET_OPENGLES")
     endif()
+    # Always prepend the current directory of the shader to the include path.
+    list(PREPEND ARG_INCLUDES "${INPUT_DIRECTORY}")
     list(APPEND ARG_INCLUDES "${IMPELLER_COMPILER_DIR}/shader_lib")
 
     # Generate OpenGL ES implementation
@@ -184,6 +188,7 @@ endfunction()
 #    [REFLECTION_JSON reflection_json_file]
 #    [REFLECTION_HEADER reflection_header_file]
 #    [REFLECTION_CC reflection_cc_file]
+#    [GLES_LANGUAGE_VERSION gles_language_version]
 #    [INCLUDES include;include]
 #    [DEFINES define;define]
 #    [DEPFILE depfile_path]
@@ -192,6 +197,7 @@ function(impellerc_parse CLI_OUT)
     cmake_parse_arguments(ARG
         "FLUTTER_SPIRV;METAL_DESKTOP;METAL_IOS;OPENGL_DESKTOP;OPENGL_ES"
         "INPUT;SL;SPIRV;REFLECTION_JSON;REFLECTION_HEADER;REFLECTION_CC;DEPFILE"
+        "GLES_LANGUAGE_VERSION"
         "INCLUDES;DEFINES" ${ARGN})
     set(CLI "")
 
@@ -208,6 +214,10 @@ function(impellerc_parse CLI_OUT)
     # --spirv
     if(ARG_SPIRV)
         list(APPEND CLI "--spirv=${ARG_SPIRV}")
+    endif()
+
+    if(ARG_GLES_LANGUAGE_VERSION)
+        list(APPEND CLI "--gles-language-version=${ARG_GLES_LANGUAGE_VERSION}")
     endif()
 
     # --[flutter-spirv|metal-desktop|metal-ios|opengl-desktop|opengl-es]

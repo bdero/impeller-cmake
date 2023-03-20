@@ -22,3 +22,6 @@
 [submodule "third_party/flatbuffers"]
 	path = third_party/flatbuffers
 	url = git@github.com:google/flatbuffers.git
+[submodule "third_party/libtess2"]
+	path = third_party/libtess2
+	url = https://flutter.googlesource.com/third_party/libtess2
