@@ -87,16 +87,44 @@ function(add_shader)
         list(APPEND ARG_DEFINES "IMPELLER_TARGET_OPENGLES")
     endif()
     list(APPEND ARG_INCLUDES "${IMPELLER_COMPILER_DIR}/shader_lib")
+
+    # Generate OpenGL ES implementation
     impellerc(
         INPUT ${ARG_INPUT}
         SL ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.${ARG_SL_EXTENSION}
         SPIRV ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.spirv
         REFLECTION_JSON ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.json
-        REFLECTION_HEADER ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.h
+        REFLECTION_HEADER ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}_SL_THROWAWAY.h
         REFLECTION_CC ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.cc
         DEFINES ${ARG_DEFINES}
         INCLUDES ${ARG_INCLUDES}
         ${ARG_UNPARSED_ARGUMENTS})
+
+    # The impeller compiler generates incorrect sampler IDs for OpenGL ES,
+    # but generates correct output for Metal (https://github.com/flutter/flutter/issues/124270).
+    # As a workaround, we run the compiler twice and use the header from
+    # Metal with the rest of the generated code from the OpenGL ES invocation.
+    list(APPEND METAL_ARG_UNPARSED_ARGUMENTS ${ARG_UNPARSED_ARGUMENTS})
+
+    # Strip away the given platform target parameter and replace it with METAL_DESKTOP.
+    list(FILTER METAL_ARG_UNPARSED_ARGUMENTS EXCLUDE REGEX "[FLUTTER_SPIRV|METAL_DESKTOP|METAL_IOS|OPENGL_DESKTOP|OPENGL_ES]")
+    list(APPEND METAL_ARG_UNPARSED_ARGUMENTS "METAL_DESKTOP")
+    impellerc(
+        INPUT ${ARG_INPUT}
+        SL ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.METAL_THROWAWAY.${ARG_SL_EXTENSION}
+        SPIRV ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.METAL_THROWAWAY.spirv
+        REFLECTION_JSON ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.METAL_THROWAWAY.json
+        REFLECTION_HEADER ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.h
+        REFLECTION_CC ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.METAL_THROWAWAY.cc
+        DEFINES ${ARG_DEFINES}
+        INCLUDES ${ARG_INCLUDES}
+        ${METAL_ARG_UNPARSED_ARGUMENTS})
+
+    # Ensure we run the Metal rule when referencing the target reflection header.
+    set_property(SOURCE
+        ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.cc
+        APPEND PROPERTY OBJECT_DEPENDS
+        ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.h)
 endfunction()
 
 # impellerc(
