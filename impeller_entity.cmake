@@ -162,5 +162,5 @@ target_link_libraries(impeller_entity
         framebuffer_blend_shaders_lib
         impeller_renderer
         impeller_geometry
-        impeller_tessellator)
-        #impeller_scene)
+        impeller_tessellator
+        impeller_scene)

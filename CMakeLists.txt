@@ -112,11 +112,9 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tessellator.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tools.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_typographer.cmake)
 
-# cmake support not complete for scene
-# include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_scene.cmake)
-
 include(${CMAKE_CURRENT_SOURCE_DIR}/impellerc.cmake)
 
 # Needs to use the add_gles_shader_library function defined in impellerc.cmake
-#include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_entity.cmake)
-#include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_aiks.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_scene.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_entity.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_aiks.cmake)
