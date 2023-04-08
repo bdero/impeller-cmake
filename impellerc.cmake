@@ -26,12 +26,12 @@ target_link_libraries(impellerc
         spirv-cross-glsl spirv-cross-msl shaderc)
 target_include_directories(impellerc
     PRIVATE
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/inja/include> # For "inja/inja.hpp"
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/json/include> # For "nlohmann/json.hpp"
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/shaderc/libshaderc/include> # For "shaderc/shaderc.hpp"
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/flatbuffers/include> # For includes starting with "flatbuffers/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
 
 # add_gles_shader_library(

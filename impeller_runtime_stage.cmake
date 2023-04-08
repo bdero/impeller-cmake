@@ -19,7 +19,7 @@ target_link_libraries(impeller_runtime_stage
         fml impeller_base)
 target_include_directories(impeller_runtime_stage
     PUBLIC
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
         $<BUILD_INTERFACE:${FLATBUFFERS_INCLUDE_DIR}> # For includes starting with "flatbuffers/"
         $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas

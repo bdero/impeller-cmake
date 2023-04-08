@@ -14,7 +14,7 @@ flatbuffers_schema(
 
 target_include_directories(impeller_blobcat
     PUBLIC
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
         $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
 target_link_libraries(impeller_blobcat PUBLIC fml impeller_base)
@@ -22,7 +22,7 @@ target_link_libraries(impeller_blobcat PUBLIC fml impeller_base)
 add_executable(blobcat "${IMPELLER_BLOBCAT_DIR}/blobcat_main.cc")
 target_include_directories(blobcat
     PUBLIC
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 target_link_libraries(blobcat PUBLIC impeller_blobcat)
 
