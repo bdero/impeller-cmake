@@ -8,14 +8,14 @@ add_gles_shader_library(
       ${IMPELLER_SCENE_DIR}/shaders/skinned.vert
       ${IMPELLER_SCENE_DIR}/shaders/unlit.frag
       ${IMPELLER_SCENE_DIR}/shaders/unskinned.vert
-    OUTPUT_DIR ${GENERATED_DIR}/impeller/scene/shaders
+    OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/scene/shaders
 )
 
 add_library(scene_shaders_lib STATIC
-    "${GENERATED_DIR}/impeller/scene/shaders/gles/scene_shaders_gles.c"
-    "${GENERATED_DIR}/impeller/scene/shaders/skinned.vert.cc"
-    "${GENERATED_DIR}/impeller/scene/shaders/unlit.frag.cc"
-    "${GENERATED_DIR}/impeller/scene/shaders/unskinned.vert.cc")
+    "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/gles/scene_shaders_gles.c"
+    "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/skinned.vert.cc"
+    "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/unlit.frag.cc"
+    "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/unskinned.vert.cc")
 
 target_include_directories(scene_shaders_lib
     PUBLIC
@@ -29,7 +29,7 @@ add_library(impeller_scene STATIC ${SCENE_SOURCES})
 
 target_include_directories(impeller_scene
     PUBLIC
-        ${GENERATED_DIR}
+        ${IMPELLER_GENERATED_DIR}
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
