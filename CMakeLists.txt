@@ -41,6 +41,8 @@ if(NOT IS_DIRECTORY ${FLUTTER_ENGINE_DIR})
     return()
 endif()
 
+set(IMPELLER_CMAKE_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/src)
+
 set(IMPELLER_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated)
 
 if(WIN32)
@@ -108,7 +110,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_runtime_stage.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_image.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tessellator.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_tools.cmake)
-#include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_typographer.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_typographer.cmake)
 
 # cmake support not complete for scene
 # include(${CMAKE_CURRENT_SOURCE_DIR}/impeller_scene.cmake)
