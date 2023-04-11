@@ -1,7 +1,8 @@
 set(IMPELLER_ENTITY_DIR ${FLUTTER_ENGINE_DIR}/impeller/entity
     CACHE STRING "Location of the Impeller entity sources.")
 
-# Build shaders
+# Entity shaders
+
 add_gles_shader_library(
     NAME entity
     SHADERS
@@ -126,6 +127,79 @@ target_include_directories(entity_shaders_lib
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
+
+# "Modern" shaders
+
+add_gles_shader_library(
+    NAME modern
+    GLES_LANGUAGE_VERSION 460
+    SHADERS
+        "${IMPELLER_ENTITY_DIR}/shaders/conical_gradient_ssbo_fill.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/linear_gradient_ssbo_fill.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/radial_gradient_ssbo_fill.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/sweep_gradient_ssbo_fill.frag"
+    OUTPUT_DIR ${GENERATED_DIR}/impeller/entity)
+
+add_library(modern_shaders_lib
+    "${GENERATED_DIR}/impeller/entity/gles/modern_shaders_gles.c"
+    "${GENERATED_DIR}/impeller/entity/conical_gradient_ssbo_fill.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/linear_gradient_ssbo_fill.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/radial_gradient_ssbo_fill.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/sweep_gradient_ssbo_fill.frag.cc")
+
+target_include_directories(modern_shaders_lib
+    PUBLIC
+        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
+
+# Framebuffer blend shaders (iOS only, but the headers need to be built regardless of the backend).
+
+add_gles_shader_library(
+    NAME framebuffer_blend
+    GLES_LANGUAGE_VERSION 460
+    SHADERS
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend.vert"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_color.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_colorburn.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_colordodge.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_darken.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_difference.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_exclusion.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_hardlight.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_hue.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_lighten.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_luminosity.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_multiply.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_overlay.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_saturation.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_screen.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/ios/framebuffer_blend_softlight.frag"
+    OUTPUT_DIR ${GENERATED_DIR}/impeller/entity)
+
+add_library(framebuffer_blend_shaders_lib
+    "${GENERATED_DIR}/impeller/entity/gles/framebuffer_blend_shaders_gles.c"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend.vert.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_color.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_colorburn.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_colordodge.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_darken.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_difference.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_exclusion.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_hardlight.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_hue.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_lighten.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_luminosity.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_multiply.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_overlay.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_saturation.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_screen.frag.cc"
+    "${GENERATED_DIR}/impeller/entity/framebuffer_blend_softlight.frag.cc")
+
+target_include_directories(framebuffer_blend_shaders_lib
+    PUBLIC
+        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
+
 # Build entity sources
 
 file(GLOB ENTITY_SOURCES
@@ -136,9 +210,6 @@ file(GLOB ENTITY_SOURCES
 
 list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_benchmarks?\\.cc$")
-
-# We're not building scene yet
-list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*scene_contents.cc$")
 
 # No playground (no gtest)
 list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_playground.cc$")
