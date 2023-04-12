@@ -1,27 +1,27 @@
 [submodule "third_party/flutter"]
 	path = third_party/flutter
-	url = git@github.com:flutter/engine.git
+	url = https://github.com/flutter/engine.git
 [submodule "third_party/angle"]
 	path = third_party/angle
-	url = git@github.com:google/angle.git
+	url = https://github.com/google/angle.git
 [submodule "third_party/abseil-cpp"]
 	path = third_party/abseil-cpp
-	url = git@github.com:abseil/abseil-cpp.git
+	url = https://github.com/abseil/abseil-cpp.git
 [submodule "third_party/spirv_cross"]
 	path = third_party/spirv_cross
-	url = git@github.com:KhronosGroup/SPIRV-Cross.git
+	url = https://github.com/KhronosGroup/SPIRV-Cross.git
 [submodule "third_party/inja"]
 	path = third_party/inja
-	url = git@github.com:pantor/inja.git
+	url = https://github.com/pantor/inja.git
 [submodule "third_party/json"]
 	path = third_party/json
-	url = git@github.com:nlohmann/json.git
+	url = https://github.com/nlohmann/json.git
 [submodule "third_party/shaderc"]
 	path = third_party/shaderc
-	url = git@github.com:google/shaderc.git
+	url = https://github.com/google/shaderc.git
 [submodule "third_party/flatbuffers"]
 	path = third_party/flatbuffers
-	url = git@github.com:google/flatbuffers.git
+	url = https://github.com/google/flatbuffers.git
 [submodule "third_party/libtess2"]
 	path = third_party/libtess2
 	url = https://flutter.googlesource.com/third_party/libtess2
