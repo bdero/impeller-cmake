@@ -124,7 +124,7 @@ add_library(entity_shaders_lib STATIC
 
 target_include_directories(entity_shaders_lib
     PUBLIC
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
 
@@ -149,7 +149,7 @@ add_library(modern_shaders_lib
 
 target_include_directories(modern_shaders_lib
     PUBLIC
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
 # Framebuffer blend shaders (iOS only, but the headers need to be built regardless of the backend).
@@ -197,7 +197,7 @@ add_library(framebuffer_blend_shaders_lib
 
 target_include_directories(framebuffer_blend_shaders_lib
     PUBLIC
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
 # Build entity sources
@@ -219,7 +219,7 @@ add_library(impeller_entity STATIC ${ENTITY_SOURCES})
 target_include_directories(impeller_entity
     PUBLIC
         ${IMPELLER_GENERATED_DIR}
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
 # TODO(bdero): Replace M_PI with kPi upstream.

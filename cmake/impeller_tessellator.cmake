@@ -8,7 +8,7 @@ add_library(impeller_tessellator STATIC ${TESSELLATOR_SOURCES})
 
 target_include_directories(impeller_tessellator
     PUBLIC
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
 target_link_libraries(impeller_tessellator

@@ -18,7 +18,7 @@ add_library(impeller_typographer
 target_include_directories(impeller_typographer
     PUBLIC
         $<BUILD_INTERFACE:${IMPELLER_CMAKE_SRC_DIR}> # For includes starting with "typographer_backends/"
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}> # For includes starting with "flutter/"
+        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}>/skia) # Skia 
 
