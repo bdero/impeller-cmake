@@ -1,3 +1,7 @@
+# Copyright 2013 The Flutter Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
 set(LIBTESS2_DIR ${THIRD_PARTY_DIR}/libtess2
     CACHE STRING "Location of the libtess2 sources.")
 
