@@ -49,6 +49,10 @@ set(IMPELLER_CMAKE_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/src)
 
 set(IMPELLER_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated)
 
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    add_compile_definitions(IMPELLER_DEBUG=1)
+endif()
+
 if(WIN32)
     add_compile_definitions(
         WIN32_LEAN_AND_MEAN

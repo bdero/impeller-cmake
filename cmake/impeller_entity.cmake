@@ -28,11 +28,14 @@ add_gles_shader_library(
         "${IMPELLER_ENTITY_DIR}/shaders/blending/advanced_blend_softlight.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/blending/blend.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/blending/blend.vert"
+        "${IMPELLER_ENTITY_DIR}/shaders/blending/porter_duff_blend.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/border_mask_blur.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/border_mask_blur.vert"
         "${IMPELLER_ENTITY_DIR}/shaders/color_matrix_color_filter.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/color_matrix_color_filter.vert"
         "${IMPELLER_ENTITY_DIR}/shaders/conical_gradient_fill.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/debug/checkerboard.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/debug/checkerboard.vert"
         "${IMPELLER_ENTITY_DIR}/shaders/gaussian_blur/gaussian_blur.vert"
         "${IMPELLER_ENTITY_DIR}/shaders/gaussian_blur/gaussian_blur_alpha_decal.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/gaussian_blur/gaussian_blur_alpha_nodecal.frag"
@@ -89,6 +92,8 @@ add_library(entity_shaders_lib STATIC
     "${IMPELLER_GENERATED_DIR}/impeller/entity/blend.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/border_mask_blur.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/border_mask_blur.vert.cc"
+    "${IMPELLER_GENERATED_DIR}/impeller/entity/checkerboard.frag.cc"
+    "${IMPELLER_GENERATED_DIR}/impeller/entity/checkerboard.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/color_matrix_color_filter.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/color_matrix_color_filter.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/conical_gradient_fill.frag.cc"
@@ -107,6 +112,7 @@ add_library(entity_shaders_lib STATIC
     "${IMPELLER_GENERATED_DIR}/impeller/entity/linear_gradient_fill.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/morphology_filter.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/morphology_filter.vert.cc"
+    "${IMPELLER_GENERATED_DIR}/impeller/entity/porter_duff_blend.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/position_color.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/position_uv.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/radial_gradient_fill.frag.cc"
@@ -215,8 +221,14 @@ file(GLOB ENTITY_SOURCES
 list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_benchmarks?\\.cc$")
 
+# TODO(bdero): Move to separate debug directory.
+if(NOT ${CMAKE_BUILD_TYPE} MATCHES Debug)
+    list(REMOVE_ITEM ${IMPELLER_ENTITY_DIR}/contents/checkerboard_contents.cc)
+    list(REMOVE_ITEM ${IMPELLER_ENTITY_DIR}/contents/checkerboard_contents.h)
+endif()
+
 # No playground (no gtest)
-list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_playground.cc$")
+list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_playground\\.cc$")
 
 add_library(impeller_entity STATIC ${ENTITY_SOURCES})
 
