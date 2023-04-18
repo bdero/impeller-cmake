@@ -19,12 +19,14 @@ else()
     add_library(impeller_renderer SHARED ${RENDERER_SOURCES})
 endif()
 
+target_link_libraries(impeller_renderer PUBLIC impeller_core)
+
 if(APPLE)
     find_library(COREVIDEO_LIBRARY CoreVideo)
     find_library(IOKIT_LIBRARY IOKit)
     find_library(COCOA_LIBRARY Cocoa)
     find_library(CARBON_LIBRARY Carbon)
-    target_link_libraries(fml
+    target_link_libraries(impeller_renderer
         PUBLIC
             ${COREVIDEO_LIBRARY}
             ${IOKIT_LIBRARY}
