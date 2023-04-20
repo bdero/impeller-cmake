@@ -11,7 +11,7 @@ namespace impeller {
 
 class TextRenderContextNoOp : public TextRenderContext {
  public:
-  TextRenderContextNoOp();
+  TextRenderContextNoOp(std::shared_ptr<Context> context);
 
   ~TextRenderContextNoOp() override;
 
