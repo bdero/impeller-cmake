@@ -8,10 +8,11 @@ namespace impeller {
 
 std::unique_ptr<TextRenderContext> TextRenderContext::Create(
     std::shared_ptr<Context> context) {
-  return std::make_unique<TextRenderContextNoOp>();
+  return std::make_unique<TextRenderContextNoOp>(context);
 }
 
-TextRenderContextNoOp::TextRenderContextNoOp() = default;
+TextRenderContextNoOp::TextRenderContextNoOp(std::shared_ptr<Context> context)
+    : TextRenderContext(std::move(context)) {}
 
 TextRenderContextNoOp::~TextRenderContextNoOp() = default;
 

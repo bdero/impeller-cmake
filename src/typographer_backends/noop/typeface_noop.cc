@@ -19,7 +19,7 @@ std::size_t TypefaceNoOp::GetHash() const {
     return 0u;
   }
 
-  return reinterpret_cast<size_t>(typeface_.get());
+  return 0u;
 }
 
 bool TypefaceNoOp::IsEqual(const Typeface& other) const {
