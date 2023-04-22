@@ -25,7 +25,7 @@ target_include_directories(scene_shaders_lib
         $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
 
-file(GLOB SCENE_SOURCES ${IMPELLER_SCENE_DIR}/*.cc ${IMPELLER_SCENE_DIR}/animation/*.cc)
+file(GLOB SCENE_SOURCES ${IMPELLER_SCENE_DIR}/*.cc ${IMPELLER_SCENE_DIR}/animation/*.cc ${IMPELLER_SCENE_DIR}/importer/conversions.cc)
 list(FILTER SCENE_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 
 add_library(impeller_scene STATIC ${SCENE_SOURCES})
