@@ -72,7 +72,7 @@ add_gles_shader_library(
     OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/entity)
 
 add_library(entity_shaders_lib STATIC
-    "${IMPELLER_GENERATED_DIR}/impeller/entity/gles/entity_shaders_gles.c"
+    "${IMPELLER_GENERATED_DIR}/impeller/entity/gles/entity_shaders_gles.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/advanced_blend.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/advanced_blend_color.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/advanced_blend_colorburn.frag.cc"
@@ -152,7 +152,7 @@ add_gles_shader_library(
     OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/entity)
 
 add_library(modern_shaders_lib
-    "${IMPELLER_GENERATED_DIR}/impeller/entity/gles/modern_shaders_gles.c"
+    "${IMPELLER_GENERATED_DIR}/impeller/entity/gles/modern_shaders_gles.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/conical_gradient_ssbo_fill.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/linear_gradient_ssbo_fill.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/radial_gradient_ssbo_fill.frag.cc"
@@ -188,7 +188,7 @@ add_gles_shader_library(
     OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/entity)
 
 add_library(framebuffer_blend_shaders_lib
-    "${IMPELLER_GENERATED_DIR}/impeller/entity/gles/framebuffer_blend_shaders_gles.c"
+    "${IMPELLER_GENERATED_DIR}/impeller/entity/gles/framebuffer_blend_shaders_gles.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/framebuffer_blend.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/framebuffer_blend_color.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/framebuffer_blend_colorburn.frag.cc"

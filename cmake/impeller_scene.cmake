@@ -15,7 +15,7 @@ add_gles_shader_library(
 )
 
 add_library(scene_shaders_lib STATIC
-    "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/gles/scene_shaders_gles.c"
+    "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/gles/scene_shaders_gles.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/skinned.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/unlit.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/scene/shaders/unskinned.vert.cc")
