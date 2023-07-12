@@ -25,3 +25,6 @@
 [submodule "third_party/libtess2"]
 	path = third_party/libtess2
 	url = https://flutter.googlesource.com/third_party/libtess2
+[submodule "third_party/stb"]
+	path = third_party/stb
+	url = https://github.com/nothings/stb.git
