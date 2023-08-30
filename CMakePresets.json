@@ -34,21 +34,21 @@
     ],
     "buildPresets": [
         {
-            "name": "Example debug VS2022",
+            "name": "Aiks Debug VS2022",
             "description": "",
             "displayName": "",
             "configurePreset": "ninja-debug-vs2022",
             "targets": [
-                "example"
+                "impeller_aiks"
             ]
         },
         {
-            "name": "Example debug",
+            "name": "Aiks Debug",
             "description": "",
             "displayName": "",
             "configurePreset": "ninja-debug-clang",
             "targets": [
-                "example"
+                "impeller_aiks"
             ]
         }
     ]
