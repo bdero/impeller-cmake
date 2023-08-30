@@ -53,6 +53,8 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(IMPELLER_DEBUG=1)
 endif()
 
+add_compile_definitions(IMPELLER_ENABLE_3D=1)
+
 if(WIN32)
     add_compile_definitions(
         WIN32_LEAN_AND_MEAN
