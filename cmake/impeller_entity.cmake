@@ -225,8 +225,7 @@ list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_benchmarks?\\.cc$")
 
 # TODO(bdero): Move to separate debug directory.
 if(NOT ${CMAKE_BUILD_TYPE} MATCHES Debug)
-    list(REMOVE_ITEM ${IMPELLER_ENTITY_DIR}/contents/checkerboard_contents.cc)
-    list(REMOVE_ITEM ${IMPELLER_ENTITY_DIR}/contents/checkerboard_contents.h)
+    list(REMOVE_ITEM ENTITY_SOURCES ${IMPELLER_ENTITY_DIR}/contents/checkerboard_contents.cc)
 endif()
 
 # No playground (no gtest)
