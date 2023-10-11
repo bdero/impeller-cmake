@@ -196,11 +196,12 @@ endfunction()
 #    [INCLUDES include;include]
 #    [DEFINES define;define]
 #    [DEPFILE depfile_path]
+#    [METAL_VERSION metal_version]
 # )
 function(impellerc_parse CLI_OUT)
     cmake_parse_arguments(ARG
         "FLUTTER_SPIRV;METAL_DESKTOP;METAL_IOS;OPENGL_DESKTOP;OPENGL_ES"
-        "INPUT;SL;SPIRV;REFLECTION_JSON;REFLECTION_HEADER;REFLECTION_CC;DEPFILE"
+        "INPUT;SL;SPIRV;REFLECTION_JSON;REFLECTION_HEADER;REFLECTION_CC;DEPFILE;METAL_VERSION"
         "GLES_LANGUAGE_VERSION"
         "INCLUDES;DEFINES" ${ARGN})
     set(CLI "")
@@ -285,6 +286,13 @@ function(impellerc_parse CLI_OUT)
     # --depfile
     if(ARG_DEPFILE)
         list(APPEND CLI "--depfile=${ARG_DEPFILE}")
+    endif()
+
+    # --metal-version
+    if(ARG_DEPFILE)
+        list(APPEND CLI "--metal-version=${ARG_METAL_VERSION}")
+    else()
+        list(APPEND CLI "--metal-version=2.3")
     endif()
 
     set(${CLI_OUT} ${CLI} PARENT_SCOPE)
