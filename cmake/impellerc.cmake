@@ -64,7 +64,7 @@ function(add_gles_shader_library)
         list(APPEND BLOB_FILES ${ARG_OUTPUT_DIR}/${INPUT_FILENAME}.gles)
     endforeach()
 
-    blobcat(
+    shader_archive(
         OUTPUT ${ARG_OUTPUT_DIR}/${ARG_NAME}_gles.blob
         INPUTS ${BLOB_FILES})
 

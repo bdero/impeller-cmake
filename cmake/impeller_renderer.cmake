@@ -52,7 +52,7 @@ target_include_directories(impeller_renderer
 
 target_link_libraries(impeller_renderer
     PUBLIC
-        fml impeller_base impeller_blobcat impeller_geometry)
+        fml impeller_base impeller_shader_archive impeller_geometry)
 target_include_directories(impeller_renderer
     PUBLIC
         $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
