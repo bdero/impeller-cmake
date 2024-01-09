@@ -32,8 +32,8 @@ add_gles_shader_library(
         "${IMPELLER_ENTITY_DIR}/shaders/blending/porter_duff_blend.vert"
         "${IMPELLER_ENTITY_DIR}/shaders/border_mask_blur.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/border_mask_blur.vert"
-        "${IMPELLER_ENTITY_DIR}/shaders/debug/checkerboard.frag",
-        "${IMPELLER_ENTITY_DIR}/shaders/debug/checkerboard.vert",
+        "${IMPELLER_ENTITY_DIR}/shaders/debug/checkerboard.frag"
+        "${IMPELLER_ENTITY_DIR}/shaders/debug/checkerboard.vert"
         "${IMPELLER_ENTITY_DIR}/shaders/clip.frag"
         "${IMPELLER_ENTITY_DIR}/shaders/clip.vert"
         "${IMPELLER_ENTITY_DIR}/shaders/color_matrix_color_filter.frag"
@@ -218,7 +218,8 @@ file(GLOB ENTITY_SOURCES
     ${IMPELLER_ENTITY_DIR}/*.cc
     ${IMPELLER_ENTITY_DIR}/contents/*.cc
     ${IMPELLER_ENTITY_DIR}/contents/filters/*.cc
-    ${IMPELLER_ENTITY_DIR}/contents/filters/inputs/*.cc)
+    ${IMPELLER_ENTITY_DIR}/contents/filters/inputs/*.cc
+    ${IMPELLER_ENTITY_DIR}/geometry/*.cc)
 
 list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 list(FILTER ENTITY_SOURCES EXCLUDE REGEX ".*_benchmarks?\\.cc$")
