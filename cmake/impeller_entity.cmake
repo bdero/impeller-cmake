@@ -71,6 +71,7 @@ add_gles_shader_library(
     OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/entity)
 
 add_library(entity_shaders_lib STATIC
+    "${IMPELLER_GENERATED_DIR}/impeller/entity/gles/entity_shaders_gles.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/advanced_blend.vert.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/advanced_blend_color.frag.cc"
     "${IMPELLER_GENERATED_DIR}/impeller/entity/advanced_blend_colorburn.frag.cc"
