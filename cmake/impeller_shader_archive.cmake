@@ -28,12 +28,18 @@ target_include_directories(impeller_shader_archive
         $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
 target_link_libraries(impeller_shader_archive PUBLIC fml impeller_base)
 
-add_executable(shader_archive "${IMPELLER_SHADER_ARCHIVE_DIR}/shader_archive_main.cc")
-target_include_directories(shader_archive
-    PUBLIC
-        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
-        $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
-target_link_libraries(shader_archive PUBLIC impeller_shader_archive)
+find_program(IMPELLER_SHADER_ARCHIVE_EXECUTABLE shader_archive)
+
+if(NOT IMPELLER_SHADER_ARCHIVE_EXECUTABLE)
+    message(NOTICE "Using the project to build `shader_archive`, but this will not work during cross compilation.")
+    add_executable(shader_archive "${IMPELLER_SHADER_ARCHIVE_DIR}/shader_archive_main.cc")
+    target_include_directories(shader_archive
+        PUBLIC
+            $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
+            $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}>) # For includes starting with "impeller/"
+    target_link_libraries(shader_archive PUBLIC impeller_shader_archive)
+    set(IMPELLER_SHADER_ARCHIVE_EXECUTABLE "$<TARGET_FILE:shader_archive>")
+endif()
 
 # shader_archive(OUTPUT filename INPUTS filename;filename)
 function(shader_archive)
@@ -46,7 +52,7 @@ function(shader_archive)
 
     add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTPUT_DIR}"
-        COMMAND "$<TARGET_FILE:shader_archive>" ${CLI}
+        COMMAND ${IMPELLER_SHADER_ARCHIVE_EXECUTABLE} ${CLI}
         DEPENDS ${ARG_INPUTS}
         OUTPUT ${ARG_OUTPUT}
         COMMENT "Building blob ${ARG_OUTPUT}"

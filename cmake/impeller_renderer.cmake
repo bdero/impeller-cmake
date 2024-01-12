@@ -44,7 +44,10 @@ message(SEND_ERROR
     return()
 endif()
 
-find_package(OpenGL REQUIRED)
+# Some platforms should use GLES
+if(NOT ANDROID AND NOT QNX)
+    find_package(OpenGL REQUIRED)
+endif()
 target_link_libraries(impeller_renderer PUBLIC ${OPENGL_LIBRARIES})
 target_include_directories(impeller_renderer
     PUBLIC
