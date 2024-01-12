@@ -9,9 +9,15 @@ file(GLOB COMPILER_SOURCES ${IMPELLER_COMPILER_DIR}/*.cc)
 list(FILTER COMPILER_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 list(REMOVE_ITEM COMPILER_SOURCES "${IMPELLER_COMPILER_DIR}/compiler_test.cc")
 
-add_executable(impellerc
-    ${COMPILER_SOURCES}
-    ${IMPELLER_GENERATED_DIR}/impeller/runtime_stage/runtime_stage_flatbuffers.h)
+find_program(IMPELLERC_EXECUTABLE impellerc)
+
+if(NOT IMPELLERC_EXECUTABLE)
+    message(NOTICE "Using the project to build `impellerc`, but this will not work during cross compilation.")
+    add_executable(impellerc
+        ${COMPILER_SOURCES}
+        ${IMPELLER_GENERATED_DIR}/impeller/runtime_stage/runtime_stage_flatbuffers.h)
+    set(IMPELLERC_EXECUTABLE "$<TARGET_FILE:impellerc>")
+
 
 if(NOT IS_DIRECTORY ${SHADERC_DIR})
     message(SEND_ERROR
@@ -37,6 +43,7 @@ target_include_directories(impellerc
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/flatbuffers/include> # For includes starting with "flatbuffers/"
         $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
+endif()
 
 # add_gles_shader_library(
 #    NAME library_name
@@ -175,7 +182,7 @@ function(impellerc)
         COMMAND ${CMAKE_COMMAND} -E make_directory "${REFLECTION_JSON_DIR}"
         COMMAND ${CMAKE_COMMAND} -E make_directory "${REFLECTION_HEADER_DIR}"
         COMMAND ${CMAKE_COMMAND} -E make_directory "${REFLECTION_CC_DIR}"
-        COMMAND "$<TARGET_FILE:impellerc>" ${CLI}
+        COMMAND ${IMPELLERC_EXECUTABLE} ${CLI}
         MAIN_DEPENDENCY ${ARG_INPUT}
         OUTPUT ${ARG_SL} ${ARG_SPIRV}
             ${ARG_REFLECTION_JSON} ${ARG_REFLECTION_HEADER} ${ARG_REFLECTION_CC}

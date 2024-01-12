@@ -7,6 +7,14 @@ add_subdirectory(third_party/flatbuffers)
 
 set(FLATBUFFERS_INCLUDE_DIR ${THIRD_PARTY_DIR}/flatbuffers/include)
 
+find_program(FLATBUFFERS_FLATC_EXECUTABLE flatc)
+
+# If the build environment has already provided a FLATC executable, use it.
+if(NOT FLATBUFFERS_FLATC_EXECUTABLE)
+    message(NOTICE "Using the project to build `flatc`, but this will not work during cross compilation.")
+    set(FLATBUFFERS_FLATC_EXECUTABLE "$<TARGET_FILE:flatc>")
+endif()
+
 # flatbuffers_schema(
 #    TARGET dependent
 #    INPUT filename
@@ -20,7 +28,7 @@ function(flatbuffers_schema)
     set(OUTPUT_HEADER "${ARG_OUTPUT_DIR}/${INPUT_FILENAME}_flatbuffers.h")
     add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E make_directory "${ARG_OUTPUT_DIR}"
-        COMMAND "$<TARGET_FILE:flatc>"
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
             --warnings-as-errors
             --cpp
             --cpp-std c++17
