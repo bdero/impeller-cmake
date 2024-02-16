@@ -9,40 +9,38 @@ file(GLOB COMPILER_SOURCES ${IMPELLER_COMPILER_DIR}/*.cc)
 list(FILTER COMPILER_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 list(REMOVE_ITEM COMPILER_SOURCES "${IMPELLER_COMPILER_DIR}/compiler_test.cc")
 
-find_program(IMPELLERC_EXECUTABLE impellerc)
+set(IMPELLERC_EXECUTABLE "$<TARGET_FILE:impellerc>" CACHE STRING "Location of the impellerc executable to use for compiling shaders. If not overridden, impellerc will be built.")
 
-if(NOT IMPELLERC_EXECUTABLE)
+if(IMPELLERC_EXECUTABLE STREQUAL "$<TARGET_FILE:impellerc>")
     message(NOTICE "Using the project to build `impellerc`, but this will not work during cross compilation.")
     add_executable(impellerc
         ${COMPILER_SOURCES}
         ${IMPELLER_GENERATED_DIR}/impeller/runtime_stage/runtime_stage_flatbuffers.h)
-    set(IMPELLERC_EXECUTABLE "$<TARGET_FILE:impellerc>")
 
+    if(NOT IS_DIRECTORY ${SHADERC_DIR})
+        message(SEND_ERROR
+        "Unable to configure the impellerc target because the shaderc install "
+        "directory (SHADERC_DIR) couldn't be found:"
+        "    ${SHADERC_DIR}\n"
+        "Run `deps.sh` to fetch dependencies.\n"
+        "Alternatively, the shaderc build artifacts can be downloaded here:"
+        "    https://github.com/google/shaderc/blob/main/downloads.md")
+        return()
+    endif()
 
-if(NOT IS_DIRECTORY ${SHADERC_DIR})
-    message(SEND_ERROR
-      "Unable to configure the impellerc target because the shaderc install "
-      "directory (SHADERC_DIR) couldn't be found:"
-      "    ${SHADERC_DIR}\n"
-      "Run `deps.sh` to fetch dependencies.\n"
-      "Alternatively, the shaderc build artifacts can be downloaded here:"
-      "    https://github.com/google/shaderc/blob/main/downloads.md")
-    return()
-endif()
-
-target_link_libraries(impellerc
-    PRIVATE
-        fml impeller_base impeller_geometry impeller_runtime_stage
-        spirv-cross-glsl spirv-cross-msl shaderc)
-target_include_directories(impellerc
-    PRIVATE
-        $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/inja/include> # For "inja/inja.hpp"
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/json/include> # For "nlohmann/json.hpp"
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/shaderc/libshaderc/include> # For "shaderc/shaderc.hpp"
-        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/flatbuffers/include> # For includes starting with "flatbuffers/"
-        $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
-        $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
+    target_link_libraries(impellerc
+        PRIVATE
+            fml impeller_base impeller_geometry impeller_runtime_stage
+            spirv-cross-glsl spirv-cross-msl shaderc)
+    target_include_directories(impellerc
+        PRIVATE
+            $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
+            $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/inja/include> # For "inja/inja.hpp"
+            $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/json/include> # For "nlohmann/json.hpp"
+            $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/shaderc/libshaderc/include> # For "shaderc/shaderc.hpp"
+            $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/flatbuffers/include> # For includes starting with "flatbuffers/"
+            $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
+            $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
 endif()
 
 # add_gles_shader_library(

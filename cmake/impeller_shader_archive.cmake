@@ -28,9 +28,9 @@ target_include_directories(impeller_shader_archive
         $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
 target_link_libraries(impeller_shader_archive PUBLIC fml impeller_base)
 
-find_program(IMPELLER_SHADER_ARCHIVE_EXECUTABLE shader_archive)
+set(IMPELLER_SHADER_ARCHIVE_EXECUTABLE "$<TARGET_FILE:shader_archive>" CACHE STRING "Location of the shader_archive executable to use for building shader archives. If not overridden, shader_archive will be built.")
 
-if(NOT IMPELLER_SHADER_ARCHIVE_EXECUTABLE)
+if(IMPELLER_SHADER_ARCHIVE_EXECUTABLE STREQUAL "$<TARGET_FILE:shader_archive>")
     message(NOTICE "Using the project to build `shader_archive`, but this will not work during cross compilation.")
     add_executable(shader_archive "${IMPELLER_SHADER_ARCHIVE_DIR}/shader_archive_main.cc")
     target_include_directories(shader_archive
