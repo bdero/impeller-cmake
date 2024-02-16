@@ -7,12 +7,10 @@ add_subdirectory(third_party/flatbuffers)
 
 set(FLATBUFFERS_INCLUDE_DIR ${THIRD_PARTY_DIR}/flatbuffers/include)
 
-find_program(FLATBUFFERS_FLATC_EXECUTABLE flatc)
+set(FLATBUFFERS_FLATC_EXECUTABLE "$<TARGET_FILE:flatc>" CACHE STRING "Location of the flatc executable to use for building flatbuffers. If not overridden, the built flatc will be used.")
 
-# If the build environment has already provided a FLATC executable, use it.
-if(NOT FLATBUFFERS_FLATC_EXECUTABLE)
+if(FLATBUFFERS_FLATC_EXECUTABLE STREQUAL "$<TARGET_FILE:flatc>")
     message(NOTICE "Using the project to build `flatc`, but this will not work during cross compilation.")
-    set(FLATBUFFERS_FLATC_EXECUTABLE "$<TARGET_FILE:flatc>")
 endif()
 
 # flatbuffers_schema(

@@ -4,6 +4,8 @@
 
 set(IMPELLER_RUNTIME_STAGE_DIR ${FLUTTER_ENGINE_DIR}/impeller/runtime_stage
     CACHE STRING "Location of the Impeller runtime stage sources.")
+set(IMPELLER_SHADER_BUNDLE_DIR ${FLUTTER_ENGINE_DIR}/impeller/shader_bundle
+    CACHE STRING "Location of the Impeller shader bundle sources.")
 
 file(GLOB RUNTIME_STAGE_SOURCES
     ${IMPELLER_RUNTIME_STAGE_DIR}/*.cc)
@@ -17,6 +19,14 @@ flatbuffers_schema(
     TARGET impeller_runtime_stage
     INPUT ${IMPELLER_RUNTIME_STAGE_DIR}/runtime_stage.fbs
     OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/runtime_stage)
+flatbuffers_schema(
+    TARGET impeller_runtime_stage
+    INPUT ${IMPELLER_RUNTIME_STAGE_DIR}/runtime_stage_types.fbs
+    OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/runtime_stage)
+flatbuffers_schema(
+    TARGET impeller_runtime_stage
+    INPUT ${IMPELLER_SHADER_BUNDLE_DIR}/shader_bundle.fbs
+    OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/shader_bundle)
 
 target_link_libraries(impeller_runtime_stage
     PUBLIC
@@ -26,4 +36,5 @@ target_include_directories(impeller_runtime_stage
         $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"
         $<BUILD_INTERFACE:${FLUTTER_ENGINE_DIR}> # For includes starting with "impeller/"
         $<BUILD_INTERFACE:${FLATBUFFERS_INCLUDE_DIR}> # For includes starting with "flatbuffers/"
-        $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}>) # For generated flatbuffer schemas
+        $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}> # For generated flatbuffer schemas
+        $<BUILD_INTERFACE:${IMPELLER_GENERATED_DIR}/impeller/runtime_stage>) # For generated flatbuffer schemas

@@ -13,6 +13,9 @@ add_library(stb_truetype
     STATIC
         ${IMPELLER_CMAKE_SRC_DIR}/stb_truetype_impl.cc)
 
+file(COPY ${THIRD_PARTY_DIR}/stb/stb_truetype.h
+    DESTINATION ${IMPELLER_GENERATED_DIR}/flutter/third_party/stb)
+
 target_include_directories(stb_truetype
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>) # For includes starting with "third_party/stb/"

@@ -8,6 +8,7 @@ set(IMPELLER_AIKS_DIR ${FLUTTER_ENGINE_DIR}/impeller/aiks
 file(GLOB AIKS_SOURCES ${IMPELLER_AIKS_DIR}/*.cc)
 list(FILTER AIKS_SOURCES EXCLUDE REGEX ".*_unittests?\\.cc$")
 list(FILTER AIKS_SOURCES EXCLUDE REGEX ".*_playground.*\\.cc$")
+list(FILTER AIKS_SOURCES EXCLUDE REGEX ".*_benchmarks.*\\.cc$")
 
 add_library(impeller_aiks STATIC ${AIKS_SOURCES})
 
