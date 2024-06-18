@@ -16,11 +16,6 @@ flatbuffers_schema(
     INPUT ${IMPELLER_SHADER_ARCHIVE_DIR}/shader_archive.fbs
     OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/shader_archive)
 
-flatbuffers_schema(
-    TARGET impeller_shader_archive
-    INPUT ${IMPELLER_SHADER_ARCHIVE_DIR}/multi_arch_shader_archive.fbs
-    OUTPUT_DIR ${IMPELLER_GENERATED_DIR}/impeller/shader_archive)
-
 target_include_directories(impeller_shader_archive
     PUBLIC
         $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}> # For includes starting with "flutter/"

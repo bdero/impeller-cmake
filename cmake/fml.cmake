@@ -57,5 +57,6 @@ target_include_directories(fml
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> # For includes starting with "third_party/" (abseil-cpp)
         $<BUILD_INTERFACE:${THIRD_PARTY_DIR}>/abseil-cpp # For includes starting with "absl/" (in the abseil headers)
+        $<BUILD_INTERFACE:${THIRD_PARTY_DIR}>/flutter_third_party # For includes beginning with "flutter/third_party"
         $<BUILD_INTERFACE:${FLUTTER_INCLUDE_DIR}>) # For includes starting with "flutter/"
 target_link_libraries(fml PRIVATE absl_symbolize)
